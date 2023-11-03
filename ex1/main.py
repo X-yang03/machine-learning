@@ -18,7 +18,7 @@ if __name__ == '__main__':
     test_data_dir = "t10k-images.idx3-ubyte"
     test_label_dir = "t10k-labels.idx1-ubyte"
     k = 10
-    iters = 200
+    iters = 100
     alpha = 0.75
 
     # get the data
@@ -32,12 +32,13 @@ if __name__ == '__main__':
     accuracy  = cal_accuracy(y_predict, test_labels)
     print("accuracy: {:.2%}".format(accuracy))
 
-    m, n = test_images.shape #(60000,784),28*28 image
-    # data processing
-    x, y = data_convert(test_images, test_labels, m, k)
-    alpha = 0.5
-    theta = softmax_regression(theta, x, y, 300, alpha)
-    print('second train!')
+    # m, n = test_images.shape #(60000,784),28*28 image
+    # test_images /=3
+    # # data processing
+    # x, y = data_convert(test_images, test_labels, m, k)
+    # alpha = 0.75
+    # theta = softmax_regression(theta, x, y, iters, alpha)
+    # print('second train!')
 
     # evaluate on the testset
     y_predict = predict(test_images, theta)
