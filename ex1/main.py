@@ -2,6 +2,8 @@
 import numpy as np
 import struct
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from data_process import load_mnist, load_data
 from data_process import data_convert
@@ -18,7 +20,7 @@ if __name__ == '__main__':
     test_data_dir = "t10k-images.idx3-ubyte"
     test_label_dir = "t10k-labels.idx1-ubyte"
     k = 10
-    iters = 100
+    iters = 1000
     alpha = 0.75
 
     # get the data
@@ -26,18 +28,24 @@ if __name__ == '__main__':
     print("Got data. ") 
 
     # train the classifier
-    theta = train(train_images, train_labels, k, iters, alpha)
-    print("Finished training. ") 
-    y_predict = predict(test_images, theta)
-    accuracy  = cal_accuracy(y_predict, test_labels)
-    print("accuracy: {:.2%}".format(accuracy))
+    
+    l = [1,2,3,4]
+    sns.lineplot(x=l,y=l)
+    #print((test-test1).sum())
+    train_images = train_images /3
+    loss,theta = train(train_images, train_labels, k, 100, alpha)
+    
+    # print("Finished training. ") 
+    # y_predict = predict(test_images, theta)
+    # accuracy  = cal_accuracy(y_predict, test_labels)
+    # print("accuracy: {:.2%}".format(accuracy))
 
     # m, n = test_images.shape #(60000,784),28*28 image
-    # test_images /=3
+    # test_images = test_images / 3
     # # data processing
-    # x, y = data_convert(test_images, test_labels, m, k)
     # alpha = 0.75
-    # theta = softmax_regression(theta, x, y, iters, alpha)
+    # f,theta = train(test_images, test_labels, k, 1000, alpha)
+    #print(f)
     # print('second train!')
 
     # evaluate on the testset

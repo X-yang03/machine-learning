@@ -14,6 +14,7 @@ def train(train_images, train_labels, k, iters = 5, alpha = 0.5):
     # and each row is a classifier coefficient for that class.
     theta = np.random.rand(k, n) # [k,n]
     # do the softmax regression
-    theta = softmax_regression(theta, x, y, iters, alpha)
-    return theta
+    loss,theta = softmax_regression(theta, x, y, iters, alpha)
+    
+    return loss,theta
 
