@@ -33,8 +33,8 @@ def load_mnist(file_dir, is_images='True'):
 
 # tranfer the image from gray to binary and get the one-hot style labels
 def data_convert(x, y, m, k):
-    x[x<=40]=0
-    x[x>40]=1
+    x[x<=100]=0
+    x[x>100]=1
     ont_hot_y = np.zeros((m,k))    #(60000,784)
     for t in np.arange(0,m):
         ont_hot_y[t,y[t]]=1

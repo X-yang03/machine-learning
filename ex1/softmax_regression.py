@@ -23,8 +23,8 @@ def softmax_regression(theta, x, y, iters, alpha):
 
         grad = x@(res_exp-y).T #梯度
 
-        # if i%100 == 0 and i>0:
-        #     alpha = alpha *0.95
+        if i % 50 == 0 and i>0:
+            alpha = alpha *0.98
 
         theta = theta - alpha*1/x.shape[1]*grad.T
 
