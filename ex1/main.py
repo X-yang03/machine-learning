@@ -36,17 +36,6 @@ if __name__ == '__main__':
     loss,theta = train(train_images, train_labels, k, 100, alpha)
     
     # print("Finished training. ") 
-    # y_predict = predict(test_images, theta)
-    # accuracy  = cal_accuracy(y_predict, test_labels)
-    # print("accuracy: {:.2%}".format(accuracy))
-
-    # m, n = test_images.shape #(60000,784),28*28 image
-    # test_images = test_images / 3
-    # # data processing
-    # alpha = 0.75
-    # f,theta = train(test_images, test_labels, k, 1000, alpha)
-    #print(f)
-    # print('second train!')
 
     # evaluate on the testset
     y_predict = predict(test_images, theta)
