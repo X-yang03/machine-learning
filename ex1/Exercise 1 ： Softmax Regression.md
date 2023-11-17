@@ -76,7 +76,7 @@ def softmax_regression(theta, x, y, iters, alpha):
     x = x.T   #x的形状原本为(60000,784),转置后为(784,60000)，可以与theta进行点乘
     Loss = [] #存储每轮迭代时的交叉熵损失值
     for i in tqdm(range(iters)):  #tqdm用于展现迭代进度
-        result = theta@x   #theta的形状为(10,784)，点乘后result形状为(10,60000)
+        result = theta@x   #theta的形状为(10,784)，点乘x后result形状为(10,60000)
         
         res_exp = np.exp(result)	#进行求指数操作
         
@@ -84,27 +84,38 @@ def softmax_regression(theta, x, y, iters, alpha):
 
         res_exp = res_exp/exp_sum[None,:] # exp/exp.sum(),每个值除以其所在列之和，进行softmax
 
-        loss = np.log(res_exp) * y
-        f = -loss.sum()/x.shape[1]
-        Loss.append(f)
+        loss = np.log(res_exp) * y #由于res_exp和y的形状都为(10,60000),可以由矩阵对位乘法获得其交叉熵损失值
+        f = -loss.sum()/x.shape[1] #将60000个样本的交叉熵损失值进行求均值
+        Loss.append(f)				#加入到Loss列表中
 
-        grad = x@(res_exp-y).T #梯度
+        grad = x@(res_exp-y).T #计算梯度
 
-        if i % 50 == 0 and i>0:
+        if i % 50 == 0 and i>0:		#学习率衰败，每50轮乘以0.98
             alpha = alpha *0.98
 
-        theta = theta - alpha*1/x.shape[1]*grad.T
-
-        res = res_exp.argmax(axis = 0)
+        theta = theta - alpha*1/x.shape[1]*grad.T   #theta的迭代
     
-    return Loss,theta
+    return Loss,theta #为了方便分析，此处做了修改，将Loss列表一同返回
+```
+
+
+
+#### cal_accuracy
+
+```python
+def cal_accuracy(y_pred, y):
+    # TODO: Compute the accuracy among the test set and store it in acc
+    y=y.reshape(len(y))
+    res = y_pred-y  #y_pred和y相减，相同的项为0
+    incorrect = np.count_nonzero(res)# 计算不为0的项的个数，即是识别错误项的个数
+    acc = 1-incorrect/len(y)  #正确率
+    
+    return acc
 ```
 
 
 
 
-
-#### cal_accuracy
 
 ## 优化方法
 
