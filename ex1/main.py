@@ -20,7 +20,7 @@ if __name__ == '__main__':
     test_data_dir = "t10k-images.idx3-ubyte"
     test_label_dir = "t10k-labels.idx1-ubyte"
     k = 10
-    iters = 1000
+    iters = 1500
     alpha = 0.75
 
     # get the data
@@ -28,14 +28,9 @@ if __name__ == '__main__':
     print("Got data. ") 
 
     # train the classifier
-    
-    l = [1,2,3,4]
-    sns.lineplot(x=l,y=l)
-    #print((test-test1).sum())
-    train_images = train_images /3
-    loss,theta = train(train_images, train_labels, k, 100, alpha)
-    
-    # print("Finished training. ") 
+    train_images = train_images.astype(float)
+    loss,theta = train(train_images, train_labels, k, iters, alpha)
+    print("Finished training. ") 
 
     # evaluate on the testset
     y_predict = predict(test_images, theta)
