@@ -20,7 +20,7 @@ if __name__ == '__main__':
     test_data_dir = "t10k-images.idx3-ubyte"
     test_label_dir = "t10k-labels.idx1-ubyte"
     k = 10
-    iters = 1500
+    iters = 500
     alpha = 0.75
 
     # get the data
