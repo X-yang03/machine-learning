@@ -1,19 +1,22 @@
 # coding=utf-8
 import numpy as np
 
+def softmax(y_pred,y):
+    batch_size ,_ = y_pred.shape
+    #y_pred = y_pred / y_pred.max(axis=1)[:,None] #防止溢出
+    #y_pred+=1e-5
+    y_pred = np.exp(y_pred)
+    y_sum = y_pred.sum(axis = 1)
+    y_pred = y_pred/y_sum[:,None]
+    loss = -np.log(y_pred).T * y
+    loss = loss.sum()/batch_size
+    grad = y_pred - y.T
+    grad /= batch_size
+    acc = (y_pred.argmax(axis=1) == y.argmax(axis=0)).mean()
+    return loss,grad,acc
 
-def predict(test_images, theta):
-    # test_images[test_images<=40]=0
-    # test_images[test_images>40] = 1
-    scores = np.dot(test_images, theta.T)
-    preds = np.argmax(scores, axis=1)
-    return preds
-
-def cal_accuracy(y_pred, y):
-    # TODO: Compute the accuracy among the test set and store it in acc
-    y=y.reshape(len(y))
-    res = y_pred-y    #相减，相同的项相减后为0
-    incorrect = np.count_nonzero(res)   #计算有多少个不为0的项，即y_pred和y不相同的项的个数
-    acc = 1-incorrect/len(y)         #计算正确率
+def cal_accuracy(model,x_val,y_val):
+    y_pred = model.fit(x_val,x_val.shape[0])
+    _,_,acc = softmax(y_pred,y_val)
     
     return acc
